@@ -1,0 +1,27 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Terraform CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Check terraform templates format
+        run: terraform fmt -check
+
+      - name: Initialize terraform using templates
+        run: terraform init
+
+      - name: Validate terraform templates
+        run: terraform validate
