@@ -1,31 +1,31 @@
 variable "project_id" {
-    type = string
+  type = string
 }
 
 variable "region" {
-    type = string
+  type = string
 }
 
 variable "vpc_name" {
-    type = string
+  type = string
 }
 
 variable "webapp_subnet_name" {
-    type = string
+  type = string
 }
 
 variable "webapp_subnet_cidr" {
-    type = string
+  type = string
 }
 
 variable "db_subnet_name" {
-    type = string
+  type = string
 }
 
 variable "db_subnet_cidr" {
-    type = string
+  type = string
 }
 
 variable "webapp_default_route_name" {
-    type = string
+  type = string
 }
