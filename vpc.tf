@@ -11,20 +11,22 @@ resource "google_compute_network" "vpc" {
 }
 
 resource "google_compute_subnetwork" "webapp-subnet" {
-  name          = var.webapp_subnet_name
-  ip_cidr_range = var.webapp_subnet_cidr
-  region        = var.region
-  network       = google_compute_network.vpc.id
+  name                     = var.webapp_subnet_name
+  ip_cidr_range            = var.webapp_subnet_cidr
+  region                   = var.region
+  network                  = google_compute_network.vpc.id
+  private_ip_google_access = true
 }
 
 resource "google_compute_subnetwork" "db-subnet" {
-  name          = var.db_subnet_name
-  ip_cidr_range = var.db_subnet_cidr
-  region        = var.region
-  network       = google_compute_network.vpc.id
+  name                     = var.db_subnet_name
+  ip_cidr_range            = var.db_subnet_cidr
+  region                   = var.region
+  network                  = google_compute_network.vpc.id
+  private_ip_google_access = true
 }
 
-resource "google_compute_route" "webapp-default" {
+resource "google_compute_route" "webapp-route" {
   name             = var.webapp_default_route_name
   dest_range       = "0.0.0.0/0"
   network          = google_compute_subnetwork.webapp-subnet.network
