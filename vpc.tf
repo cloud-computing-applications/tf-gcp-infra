@@ -1,6 +1,5 @@
 provider "google" {
   project = var.project_id
-  region  = var.region
 }
 
 resource "google_compute_network" "vpc" {
@@ -13,7 +12,7 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_subnetwork" "webapp-subnet" {
   name                     = var.webapp_subnet_name
   ip_cidr_range            = var.webapp_subnet_cidr
-  region                   = var.region
+  region                   = var.webapp_subnet_region
   network                  = google_compute_network.vpc.id
   private_ip_google_access = true
 }
@@ -21,7 +20,7 @@ resource "google_compute_subnetwork" "webapp-subnet" {
 resource "google_compute_subnetwork" "db-subnet" {
   name                     = var.db_subnet_name
   ip_cidr_range            = var.db_subnet_cidr
-  region                   = var.region
+  region                   = var.db_subnet_region
   network                  = google_compute_network.vpc.id
   private_ip_google_access = true
 }
