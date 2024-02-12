@@ -5,7 +5,9 @@
 2. Perform gcloud user authentication using ```gcloud auth login```
 3. Generate application default credentials to allow Terraform to access your gcp services using ```gcloud auth application-default login```
 4. Set your project using ```gcloud config set project <YOUR_PROJECT_ID>```
-5. Setup following terraform environment variables in project directory using a "tfvars" file
+5. Enable the following GCP Service APIs
+    - Compute Engine API
+7. Setup following terraform environment variables in project directory using a "tfvars" file
     - project_id - ID of your gcp project
     - vpc_name - Name of your vpc
     - webapp_subnet_name - Name of your webapp subnet
