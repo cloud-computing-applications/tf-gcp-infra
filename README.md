@@ -16,3 +16,7 @@
     - db_subnet_region - Region of db subnet
     - webapp_default_route_name - Name of webapp catch-all route (0.0.0.0/0)
 
+## Instructions
+1. Initialize terraform using ```terraform init```
+2. Check the changes the template will apply using ```terraform plan -var-file=<YOUR_TFVARS_FILE>```
+3. Apply the changes using ```terraform apply -var-file=<YOUR_TFVARS_FILE>```
