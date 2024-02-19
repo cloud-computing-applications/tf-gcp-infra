@@ -26,7 +26,11 @@ variable "webapp_allow_http_firewall_name" {
   type = string
 }
 
-variable "webapp_http_port" {
+variable "webapp_allow_http_firewall_direction" {
+  type = string
+}
+
+variable "webapp_tcp_port" {
   type = string
 }
 

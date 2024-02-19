@@ -35,12 +35,12 @@ resource "google_compute_route" "webapp-route" {
 resource "google_compute_firewall" "webapp-http-firewall" {
   name               = var.webapp_allow_http_firewall_name
   network            = google_compute_network.vpc.id
-  direction          = "INGRESS"
+  direction          = var.webapp_allow_http_firewall_direction
   source_ranges      = ["0.0.0.0/0"]
   destination_ranges = [var.webapp_subnet_cidr]
   target_tags        = [var.webapp_allow_http_tag]
   allow {
     protocol = "tcp"
-    ports    = [var.webapp_http_port]
+    ports    = [var.webapp_tcp_port]
   }
 }
