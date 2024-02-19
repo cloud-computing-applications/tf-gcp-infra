@@ -4,7 +4,7 @@ provider "google" {
 
 resource "google_compute_network" "vpc" {
   name                            = var.vpc_name
-  routing_mode                    = "REGIONAL"
+  routing_mode                    = var.vpc_routing_mode
   auto_create_subnetworks         = false
   delete_default_routes_on_create = true
 }
@@ -30,4 +30,17 @@ resource "google_compute_route" "webapp-route" {
   dest_range       = "0.0.0.0/0"
   network          = google_compute_subnetwork.webapp-subnet.network
   next_hop_gateway = "default-internet-gateway"
+}
+
+resource "google_compute_firewall" "webapp-http-firewall" {
+  name               = var.webapp_allow_http_firewall_name
+  network            = google_compute_network.vpc.id
+  direction          = "INGRESS"
+  source_ranges      = ["0.0.0.0/0"]
+  destination_ranges = [var.webapp_subnet_cidr]
+  target_tags        = [var.webapp_allow_http_tag]
+  allow {
+    protocol = "tcp"
+    ports    = [var.webapp_http_port]
+  }
 }
