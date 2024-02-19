@@ -16,7 +16,8 @@
     - webapp_subnet_cidr - webapp subnet IP address range in CIDR
     - webapp_subnet_region - Region of webapp subnet
     - webapp-allow-http-firewall_name - Name of http firewall applied on your webapp subnet
-    - webapp_http_port - port of your webapp application to be accessed from internet
+    - webapp_allow_http_firewall_direction - Direction of traffic to which the firewall applies
+    - webapp_tcp_port - port of your webapp application to be accessed from internet
     - webapp_allow_http_tag - acts as target tag and network tag for your webapp-allow-http-firewall firewall and webapp instance respectively 
     - webpp_instance_name - webapp instance name
     - webapp_machine_type - webapp instance machine type
