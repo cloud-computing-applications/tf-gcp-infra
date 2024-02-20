@@ -3,7 +3,7 @@ provider "google" {
 }
 
 resource "google_compute_network" "vpc" {
-  name                            = var.vpc_name
+  nam                            = var.vpc_name
   routing_mode                    = var.vpc_routing_mode
   auto_create_subnetworks         = false
   delete_default_routes_on_create = true
