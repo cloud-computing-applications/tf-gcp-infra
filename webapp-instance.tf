@@ -4,6 +4,7 @@ resource "google_compute_instance" "webapp-instance" {
     google_compute_subnetwork.webapp-subnet,
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
+    google_compute_firewall.deny-all-firewall,
     google_compute_firewall.webapp-http-firewall
   ]
 
