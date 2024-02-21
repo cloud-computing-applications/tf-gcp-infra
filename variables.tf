@@ -22,11 +22,44 @@ variable "webapp_subnet_region" {
   type = string
 }
 
+variable "deny_all_firewall_name" {
+  type = string
+}
+
+variable "deny_all_firewall_direction" {
+  type = string
+}
+
+variable "deny_all_firewall_source_range" {
+  type = string
+}
+
+variable "deny_all_firewall_destination_range" {
+  type = string
+}
+
+variable "deny_all_firewall_protocol" {
+  type = string
+}
+
+variable "deny_all_firewall_priority" {
+  type = number
+}
+
+
 variable "webapp_allow_http_firewall_name" {
   type = string
 }
 
 variable "webapp_allow_http_firewall_direction" {
+  type = string
+}
+
+variable "webapp_allow_http_source_range" {
+  type = string
+}
+
+variable "webapp_allow_http_protocol" {
   type = string
 }
 
@@ -36,6 +69,10 @@ variable "webapp_tcp_port" {
 
 variable "webapp_allow_http_tag" {
   type = string
+}
+
+variable "webapp_allow_http_priority" {
+  type = number
 }
 
 variable "webpp_instance_name" {
@@ -75,5 +112,13 @@ variable "db_subnet_region" {
 }
 
 variable "webapp_default_route_name" {
+  type = string
+}
+
+variable "webapp_default_route_dest_range" {
+  type = string
+}
+
+variable "webapp_default_route_next_hop_gateway" {
   type = string
 }

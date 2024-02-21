@@ -27,20 +27,33 @@ resource "google_compute_subnetwork" "db-subnet" {
 
 resource "google_compute_route" "webapp-route" {
   name             = var.webapp_default_route_name
-  dest_range       = "0.0.0.0/0"
+  dest_range       = var.webapp_default_route_dest_range
   network          = google_compute_subnetwork.webapp-subnet.network
-  next_hop_gateway = "default-internet-gateway"
+  next_hop_gateway = var.webapp_default_route_next_hop_gateway
+}
+
+resource "google_compute_firewall" "deny-all-firewall" {
+  name               = var.deny_all_firewall_name
+  network            = google_compute_network.vpc.id
+  direction          = var.deny_all_firewall_direction
+  source_ranges      = [var.deny_all_firewall_source_range]
+  destination_ranges = [var.deny_all_firewall_destination_range]
+  priority           = var.deny_all_firewall_priority
+  deny {
+    protocol = var.deny_all_firewall_protocol
+  }
 }
 
 resource "google_compute_firewall" "webapp-http-firewall" {
   name               = var.webapp_allow_http_firewall_name
   network            = google_compute_network.vpc.id
   direction          = var.webapp_allow_http_firewall_direction
-  source_ranges      = ["0.0.0.0/0"]
+  source_ranges      = [var.webapp_allow_http_source_range]
   destination_ranges = [var.webapp_subnet_cidr]
   target_tags        = [var.webapp_allow_http_tag]
+  priority           = var.webapp_allow_http_priority
   allow {
-    protocol = "tcp"
+    protocol = var.webapp_allow_http_protocol
     ports    = [var.webapp_tcp_port]
   }
 }
