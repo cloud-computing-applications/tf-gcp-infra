@@ -2,6 +2,10 @@ provider "google" {
   project = var.project_id
 }
 
+provider "google-beta" {
+  project = var.project_id
+}
+
 resource "google_compute_network" "vpc" {
   name                            = var.vpc_name
   routing_mode                    = var.vpc_routing_mode

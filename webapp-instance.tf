@@ -1,3 +1,20 @@
+data "template_file" "startup" {
+  depends_on = [ 
+    google_sql_database_instance.db_instance,
+    google_sql_user.db_user,
+    google_sql_database.database
+  ]
+
+  template = file("startup-script.sh")
+  vars = {
+    PORT=var.application_port
+    DB_USERNAME=google_sql_user.db_user.name
+    DB_PASSWORD=google_sql_user.db_user.password
+    DB_DATABASE=google_sql_database.database.name
+    DB_HOST=google_sql_database_instance.db_instance.private_ip_address
+  }
+}
+
 resource "google_compute_instance" "webapp-instance" {
   depends_on = [
     google_compute_network.vpc,
@@ -5,7 +22,11 @@ resource "google_compute_instance" "webapp-instance" {
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
-    google_compute_firewall.webapp-http-firewall
+    google_compute_firewall.webapp-http-firewall,
+    google_sql_database_instance.db_instance,
+    google_sql_user.db_user,
+    google_sql_database.database,
+    data.template_file.startup
   ]
 
   name         = var.webpp_instance_name
@@ -27,4 +48,6 @@ resource "google_compute_instance" "webapp-instance" {
     subnetwork = google_compute_subnetwork.webapp-subnet.name
     access_config {}
   }
+
+  metadata_startup_script = data.template_file.startup.rendered
 }
