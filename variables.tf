@@ -122,3 +122,97 @@ variable "webapp_default_route_dest_range" {
 variable "webapp_default_route_next_hop_gateway" {
   type = string
 }
+
+variable "db_ps_ip_range_address_name" {
+  type = string
+}
+
+variable "db_ps_ip_range_address_type" {
+  type = string
+}
+
+variable "db_ps_ip_range_address_purpose" {
+  type = string
+}
+
+variable "db_ps_ip_range_address_first_ip" {
+  type = string
+}
+
+variable "db_ps_ip_range_address_prefix_length" {
+  type = number
+}
+
+variable "db_ps_connection_deletion_policy" {
+  type = string
+}
+
+variable "db_ps_connection_service" {
+  type = string
+}
+
+variable "db_instance_name" {
+  type = string
+}
+
+variable "db_instance_database_version" {
+  type = string
+}
+
+variable "db_instance_region" {
+  type = string
+}
+
+variable "db_instance_deletion_protection" {
+  type = bool
+}
+
+variable "db_instance_tier" {
+  type = string
+}
+
+variable "db_instance_availability_type" {
+  type = string
+}
+
+variable "db_instance_edition" {
+  type = string
+}
+
+variable "db_instance_disk_type" {
+  type = string
+}
+
+variable "db_instance_disk_size" {
+  type = number
+}
+
+variable "db_instance_ipv4_enabled" {
+  type = bool
+}
+
+variable "db_instance_enable_private_path_for_google_cloud_services" {
+  type = bool
+}
+
+variable "db_instance_backup_configuration_enabled" {
+  type = bool
+}
+
+variable "db_instance_binary_log_enabled" {
+  type = bool
+}
+
+variable "db_user_name" {
+  type = string
+}
+
+variable "application_port" {
+  type      = string
+  sensitive = true
+}
+
+variable "database_name" {
+  type      = string
+  sensitive = true
+}
