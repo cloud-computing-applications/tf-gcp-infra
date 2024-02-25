@@ -99,6 +99,10 @@ variable "webapp_image_family" {
   type = string
 }
 
+variable "webapp_startup_script_path" {
+  type = string
+}
+
 variable "db_subnet_name" {
   type = string
 }
@@ -201,6 +205,50 @@ variable "db_instance_backup_configuration_enabled" {
 
 variable "db_instance_binary_log_enabled" {
   type = bool
+}
+
+variable "deny_all_db_firewall_name" {
+  type = string
+}
+
+variable "deny_all_db_firewall_direction" {
+  type = string
+}
+
+variable "deny_all_db_firewall_source_range" {
+  type = string
+}
+
+variable "deny_all_db_firewall_priority" {
+  type = number
+}
+
+variable "deny_all_db_firewall_protocol" {
+  type = string
+}
+
+variable "allow_db_firewall_name" {
+  type = string
+}
+
+variable "allow_db_firewall_direction" {
+  type = string
+}
+
+variable "allow_db_http_tag" {
+  type = string
+}
+
+variable "allow_db_firewall_priority" {
+  type = number
+}
+
+variable "allow_db_firewall_protocol" {
+  type = string
+}
+
+variable "allow_db_tcp_port" {
+  type = string
 }
 
 variable "db_user_name" {

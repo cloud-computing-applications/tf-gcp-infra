@@ -99,3 +99,36 @@ resource "google_sql_database" "database" {
   name     = var.database_name
   instance = google_sql_database_instance.db_instance.name
 }
+
+resource "google_compute_firewall" "deny-db-firewall" {
+  depends_on = [
+    google_compute_global_address.db_ps_ip_range,
+    google_sql_database_instance.db_instance
+  ]
+  name               = var.deny_all_db_firewall_name
+  network            = google_compute_network.vpc.id
+  direction          = var.deny_all_db_firewall_direction
+  source_ranges      = [var.deny_all_db_firewall_source_range]
+  destination_ranges = ["${google_compute_global_address.db_ps_ip_range.address}/${google_compute_global_address.db_ps_ip_range.prefix_length}"]
+  priority           = var.deny_all_db_firewall_priority
+  deny {
+    protocol = var.deny_all_db_firewall_protocol
+  }
+}
+
+resource "google_compute_firewall" "allow-db-firewall" {
+  depends_on = [
+    google_compute_global_address.db_ps_ip_range,
+    google_sql_database_instance.db_instance
+  ]
+  name               = var.allow_db_firewall_name
+  network            = google_compute_network.vpc.id
+  direction          = var.allow_db_firewall_direction
+  target_tags        = [var.allow_db_http_tag]
+  destination_ranges = ["${google_compute_global_address.db_ps_ip_range.address}/${google_compute_global_address.db_ps_ip_range.prefix_length}"]
+  priority           = var.allow_db_firewall_priority
+  allow {
+    protocol = var.allow_db_firewall_protocol
+    ports    = [var.allow_db_tcp_port]
+  }
+}

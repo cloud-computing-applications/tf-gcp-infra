@@ -1,17 +1,17 @@
 data "template_file" "startup" {
-  depends_on = [ 
+  depends_on = [
     google_sql_database_instance.db_instance,
     google_sql_user.db_user,
     google_sql_database.database
   ]
 
-  template = file("startup-script.sh")
+  template = file(var.webapp_startup_script_path)
   vars = {
-    PORT=var.application_port
-    DB_USERNAME=google_sql_user.db_user.name
-    DB_PASSWORD=google_sql_user.db_user.password
-    DB_DATABASE=google_sql_database.database.name
-    DB_HOST=google_sql_database_instance.db_instance.private_ip_address
+    PORT        = var.application_port
+    DB_USERNAME = google_sql_user.db_user.name
+    DB_PASSWORD = google_sql_user.db_user.password
+    DB_DATABASE = google_sql_database.database.name
+    DB_HOST     = google_sql_database_instance.db_instance.private_ip_address
   }
 }
 
@@ -26,13 +26,15 @@ resource "google_compute_instance" "webapp-instance" {
     google_sql_database_instance.db_instance,
     google_sql_user.db_user,
     google_sql_database.database,
+    google_compute_firewall.deny-db-firewall,
+    google_compute_firewall.allow-db-firewall,
     data.template_file.startup
   ]
 
   name         = var.webpp_instance_name
   machine_type = var.webapp_machine_type
   zone         = var.webapp_instance_zone
-  tags         = [var.webapp_allow_http_tag]
+  tags         = [var.webapp_allow_http_tag, var.allow_db_http_tag]
 
   boot_disk {
     auto_delete = true
