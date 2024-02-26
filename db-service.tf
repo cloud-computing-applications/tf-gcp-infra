@@ -75,9 +75,12 @@ resource "google_sql_database_instance" "db_instance" {
 }
 
 resource "random_password" "db_password" {
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  depends_on = [
+    google_sql_database_instance.db_instance
+  ]
+  length           = var.db_password_length
+  special          = var.db_password_special
+  override_special = var.db_password_override_special
 }
 
 resource "google_sql_user" "db_user" {

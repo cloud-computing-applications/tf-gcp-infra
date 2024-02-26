@@ -207,6 +207,18 @@ variable "db_instance_binary_log_enabled" {
   type = bool
 }
 
+variable "db_password_length" {
+  type = number
+}
+
+variable "db_password_special" {
+  type = bool
+}
+
+variable "db_password_override_special" {
+  type = string
+}
+
 variable "deny_all_db_firewall_name" {
   type = string
 }
