@@ -61,6 +61,9 @@
     - db_instance_enable_private_path_for_google_cloud_services - Whether private IP access is enabled for the Google Cloud SQL instance
     - db_instance_backup_configuration_enabled - Whether backup configuration is enabled for the Google Cloud SQL instance
     - db_instance_binary_log_enabled - Whether binary logging is enabled for the Google Cloud SQL instance
+    - db_password_length - length of mysql database user's password to be generated
+    - db_password_special - Whether to include special characters in the password
+    - db_password_override_special - String of special characters used for generating password
     - db_user_name - Username for the database user
     - application_port - Port used by the application
     - database_name - Name of the MySQL database
