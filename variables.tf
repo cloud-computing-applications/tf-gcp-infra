@@ -276,3 +276,15 @@ variable "database_name" {
   type      = string
   sensitive = true
 }
+
+variable "dns_zone_name" {
+  type = string
+}
+
+variable "webapp-a-rs-type" {
+  type = string
+}
+
+variable "webapp-a-rs-ttl" {
+  type = number
+}
