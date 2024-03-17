@@ -18,11 +18,11 @@ data "template_file" "startup" {
 resource "google_service_account" "webapp-service-account" {
   account_id   = var.webapp-service-account-name
   display_name = var.webapp-service-account-name
-  description = var.webapp-service-account-description
+  description  = var.webapp-service-account-description
 }
 
 resource "google_project_iam_binding" "webapp-service-account-permissions" {
-  depends_on = [ google_service_account.webapp-service-account ]
+  depends_on = [google_service_account.webapp-service-account]
 
   for_each = toset(var.webapp-service-account-permissions)
 
@@ -73,7 +73,7 @@ resource "google_compute_instance" "webapp-instance" {
   }
 
   service_account {
-    email = google_service_account.webapp-service-account.email
+    email  = google_service_account.webapp-service-account.email
     scopes = var.webapp_service_account_scopes
   }
 
