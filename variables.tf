@@ -99,6 +99,10 @@ variable "webapp_image_family" {
   type = string
 }
 
+variable "webapp_service_account_scopes" {
+  type = list(string)
+}
+
 variable "webapp_startup_script_path" {
   type = string
 }
@@ -287,4 +291,16 @@ variable "webapp-a-rs-type" {
 
 variable "webapp-a-rs-ttl" {
   type = number
+}
+
+variable "webapp-service-account-name" {
+  type = string
+}
+
+variable "webapp-service-account-description" {
+  type = string
+}
+
+variable "webapp-service-account-permissions" {
+  type = list(string)
 }
