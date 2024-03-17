@@ -15,6 +15,25 @@ data "template_file" "startup" {
   }
 }
 
+resource "google_service_account" "webapp-service-account" {
+  account_id   = var.webapp-service-account-name
+  display_name = var.webapp-service-account-name
+  description = var.webapp-service-account-description
+}
+
+resource "google_project_iam_binding" "webapp-service-account-permissions" {
+  depends_on = [ google_service_account.webapp-service-account ]
+
+  for_each = toset(var.webapp-service-account-permissions)
+
+  project = var.project_id
+  role    = each.value
+
+  members = [
+    google_service_account.webapp-service-account.member
+  ]
+}
+
 resource "google_compute_instance" "webapp-instance" {
   depends_on = [
     google_compute_network.vpc,
@@ -28,7 +47,9 @@ resource "google_compute_instance" "webapp-instance" {
     google_sql_database.database,
     google_compute_firewall.deny-db-firewall,
     google_compute_firewall.allow-db-firewall,
-    data.template_file.startup
+    data.template_file.startup,
+    google_service_account.webapp-service-account,
+    google_project_iam_binding.webapp-service-account-permissions
   ]
 
   name         = var.webpp_instance_name
@@ -49,6 +70,11 @@ resource "google_compute_instance" "webapp-instance" {
     network    = google_compute_network.vpc.id
     subnetwork = google_compute_subnetwork.webapp-subnet.name
     access_config {}
+  }
+
+  service_account {
+    email = google_service_account.webapp-service-account.email
+    scopes = var.webapp_service_account_scopes
   }
 
   metadata_startup_script = data.template_file.startup.rendered
