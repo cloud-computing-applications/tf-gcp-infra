@@ -100,7 +100,7 @@ variable "webapp_image_family" {
 }
 
 variable "webapp_service_account_scopes" {
-  type = list(string)
+  type = string
 }
 
 variable "webapp_startup_script_path" {
@@ -311,5 +311,5 @@ variable "webapp_service_account_description" {
 }
 
 variable "webapp_service_account_permissions" {
-  type = list(string)
+  type = string
 }

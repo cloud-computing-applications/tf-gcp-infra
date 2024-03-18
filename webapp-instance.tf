@@ -23,10 +23,18 @@ resource "google_service_account" "webapp-service-account" {
   description  = var.webapp_service_account_description
 }
 
-resource "google_project_iam_binding" "webapp-service-account-permissions" {
-  depends_on = [google_service_account.webapp-service-account]
+locals {
+  webapp_service_account_permissions_array = split(",", var.webapp_service_account_permissions)
+  webapp_service_account_scopes_array = split(",", var.webapp_service_account_scopes)
+}
 
-  for_each = toset(var.webapp_service_account_permissions)
+resource "google_project_iam_binding" "webapp-service-account-permissions" {
+  depends_on = [
+    google_service_account.webapp-service-account,
+    local.webapp_service_account_permissions_array
+  ]
+
+  for_each = toset(local.webapp_service_account_permissions_array)
 
   project = var.project_id
   role    = each.value
@@ -51,7 +59,8 @@ resource "google_compute_instance" "webapp-instance" {
     google_compute_firewall.allow-db-firewall,
     data.template_file.startup,
     google_service_account.webapp-service-account,
-    google_project_iam_binding.webapp-service-account-permissions
+    google_project_iam_binding.webapp-service-account-permissions,
+    local.webapp_service_account_scopes_array
   ]
 
   name         = var.webpp_instance_name
@@ -76,7 +85,7 @@ resource "google_compute_instance" "webapp-instance" {
 
   service_account {
     email  = google_service_account.webapp-service-account.email
-    scopes = var.webapp_service_account_scopes
+    scopes = local.webapp_service_account_scopes_array
   }
 
   metadata_startup_script = data.template_file.startup.rendered
