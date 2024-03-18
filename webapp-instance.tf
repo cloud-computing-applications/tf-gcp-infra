@@ -25,7 +25,7 @@ resource "google_service_account" "webapp-service-account" {
 
 locals {
   webapp_service_account_permissions_array = split(",", var.webapp_service_account_permissions)
-  webapp_service_account_scopes_array = split(",", var.webapp_service_account_scopes)
+  webapp_service_account_scopes_array      = split(",", var.webapp_service_account_scopes)
 }
 
 resource "google_project_iam_binding" "webapp-service-account-permissions" {
