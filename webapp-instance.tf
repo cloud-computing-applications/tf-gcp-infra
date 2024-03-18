@@ -7,24 +7,26 @@ data "template_file" "startup" {
 
   template = file(var.webapp_startup_script_path)
   vars = {
-    PORT        = var.application_port
-    DB_USERNAME = google_sql_user.db_user.name
-    DB_PASSWORD = google_sql_user.db_user.password
-    DB_DATABASE = google_sql_database.database.name
-    DB_HOST     = google_sql_database_instance.db_instance.private_ip_address
+    PORT          = var.application_port
+    DB_USERNAME   = google_sql_user.db_user.name
+    DB_PASSWORD   = google_sql_user.db_user.password
+    DB_DATABASE   = google_sql_database.database.name
+    DB_HOST       = google_sql_database_instance.db_instance.private_ip_address
+    ENVIRONMENT   = var.environment
+    LOG_FILE_PATH = var.log_file_path
   }
 }
 
 resource "google_service_account" "webapp-service-account" {
-  account_id   = var.webapp-service-account-name
-  display_name = var.webapp-service-account-name
-  description  = var.webapp-service-account-description
+  account_id   = var.webapp_service_account_name
+  display_name = var.webapp_service_account_name
+  description  = var.webapp_service_account_description
 }
 
 resource "google_project_iam_binding" "webapp-service-account-permissions" {
   depends_on = [google_service_account.webapp-service-account]
 
-  for_each = toset(var.webapp-service-account-permissions)
+  for_each = toset(var.webapp_service_account_permissions)
 
   project = var.project_id
   role    = each.value

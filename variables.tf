@@ -281,26 +281,35 @@ variable "database_name" {
   sensitive = true
 }
 
+variable "environment" {
+  type = string
+}
+
+variable "log_file_path" {
+  type      = string
+  sensitive = true
+}
+
 variable "dns_zone_name" {
   type = string
 }
 
-variable "webapp-a-rs-type" {
+variable "webapp_a_rs_type" {
   type = string
 }
 
-variable "webapp-a-rs-ttl" {
+variable "webapp_a_rs_ttl" {
   type = number
 }
 
-variable "webapp-service-account-name" {
+variable "webapp_service_account_name" {
   type = string
 }
 
-variable "webapp-service-account-description" {
+variable "webapp_service_account_description" {
   type = string
 }
 
-variable "webapp-service-account-permissions" {
+variable "webapp_service_account_permissions" {
   type = list(string)
 }
