@@ -114,7 +114,7 @@
       - allow_db_tcp_port - TCP port for the firewall rule allowing specific traffic to the MySQL database
     
     - Webapp DNS Zone
-      - dns_zone_name - DNS zone name for your webapp
+      - dns_zone_name - Name of DNS zone you created for webapp
       - webapp_a_rs_type - A record type for webapp (should be "A")
       - webapp_a_rs_ttl - Time to live for the A record of webapp
 
