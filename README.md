@@ -11,6 +11,12 @@
     - Cloud DNS API
     - Cloud Logging API
     - Cloud Monitoring API
+    - Cloud Build API
+    - Cloud Functions API
+    - Cloud Pub/Sub API
+    - Eventarc API
+    - Cloud Run Admin API
+    - Serverless VPC Access API
 6. Create your custom application image for your webapp and provide an image family name to it
 7. Setup following terraform environment variables in project directory using a "tfvars" file
     - Project and vpc
@@ -93,10 +99,11 @@
       - db_user_name - Username for the database user
       - database_name - Name of the MySQL database
 
-    - Environment variables
+    - Webapp Environment variables
       - application_port - Port used by the application
       - environment - The environment of the application (DEVELOPMENT, TEST, PRODUCTION)
       - log_file_path - Path of the log file where the application will dump it's logs (Not used for TEST Environment)
+      - EXPIRY_BUFFER - Amount of time after which the verification link will expire (in seconds)
 
     - Deny all traffic to db instance firewall
       - deny_all_db_firewall_name - Name for the firewall rule denying all traffic to the MySQL database
@@ -122,7 +129,80 @@
       - webapp_service_account_name - Service account name to be created and used for webapp instance
       - webapp_service_account_description - Description of service account used for webapp instance
       - webapp_service_account_permissions - Comma seperated string containing the roles for service account that is used for webapp instance
+    
+    - Pub/Sub Topic Schema for email verification
+      - topic_schema_name - Name of the topic schema
+      - topic_schema_type - Schema type (use "AVRO" for provided schema)
+      - topic_schema_definition = Path to file containing topic schema definition
+    
+    - Pub/Sub Topic for email verification
+      - topic_name - Name of Topic
+      - topic_message_retention_duration - retention period of topic messages in seconds (eg. "604800s")
+      - topic_schema_encoding - Encoding of topic schema used for this topic (use "JSON" for provided schema)
+    
+    - Subscription Service Account Creation
+      - subscription_service_account_id - Id of subscription service account
+      - subscription_service_account_name - Display name of subscription service account
 
+    - Cloud function Service Account Creation
+      - cloud_function_service_account_id - Id of Cloud function service account
+      - cloud_function_service_account_name - Display name of Cloud function service account
+    
+    - Google Storage Bucket
+      - bucket_name_prefix_random_byte_length - length of random prefix for bucket name
+      - bucket_name_postfix - bucket postfix name
+      - bucket_storage_class - bucket storage class
+      - bucket_location - location of storage bucket
+      - bucket_uniform_level_access - Wheather uniform level access is enabled for bucket
+      - bucket_force_destroy - Wheather force destroy is enabled for bucket
+
+    - Archiving code for Serverless
+      - archive_file_type - type of archieve file (use "zip")
+      - archive_file_output_path - output path of generated archieve file
+      - archive_file_source_dir - source directory path using which the archieve file is generated
+      - bucket_object_name - Name of the object which will be used as source for cloud function
+    
+    - VPC Connector for cloud function to allow DB interaction
+      - db_vpc_connector_name - Name of vpc connector
+      - db_vpc_connector_ip_range - IP range for vpc connector in your vpc (should be /28)
+      - db_vpc_connector_machine_type - machine type for vpc connector
+      - db_vpc_connector_min_instances - minimum number of connector instances
+      - db_vpc_connector_max_instances - maximum number of connector instances
+      - db_vpc_connector_region - region of vpc connector
+    
+    - Firewall to allow DB access from cloud functions
+      - allow_db_firewall_cf_name - Name of the firewall
+      - allow_db_firewall_cf_direction - Direction of the firewall (use "EGRESS")
+      - allow_db_firewall_cf_priority  = Priority of the firewall
+     
+    - Cloud Function Gen 2
+      - cloud_function_name - Name of cloud function
+      - cloud_function_location - Region of cloud function
+      - cloud_function_runtime - Runtime of cloud function
+      - cloud_function_entry_point - Entry point of cloud function
+      - cloud_function_timeout_seconds - Cloud function timeout in seconds
+      - cloud_function_memory - Memory allocated to cloud function
+      - cloud_function_cpu - Cpu allocated to cloud function
+      - cloud_function_all_traffic_latest - Whether 100% of traffic is routed to the latest revision
+      - cloud_function_ingress_settings - cloud function ingress setting
+      - cloud_function_min_instances - minimum number of cloud function instances
+      - cloud_function_max_instances - maximum number of cloud function instances
+      - cloud_function_vpc_egress_settings - egress setting for the vpc connector attached to this cloud function
+      - cloud_function_event_trigger_region - region for the trigger of the cloud function
+      - cloud_function_event_trigger_event_type - event trigger type for the cloud function
+      - cloud_function_event_trigger_retry_policy - retry policy of the trigger 
+
+    - Cloud Function Environment variables
+      - SEND_GRID_KEY - SendGrid API Key
+      - SEND_GRID_FROM - Sender of the verification mail
+      - SEND_GRID_TEMPLATE_ID - Id of the template created on  
+      - DOMAIN_PROTOCOL - Protocol for your domain (http or https)
+      - DOMAIN_NAME - Domain name
+      - WEBAPP_PORT - Port on which the server is running
+
+    - Role Bindings
+      - subscription_service_account_binding_role - Role to be bound to subscription service account for cloud function resource
+      - webapp_service_account_binding_role - Role to be bound to webapp serice account for the created topic resource
 
 ## Instructions
 1. Initialize terraform using ```terraform init```
