@@ -313,3 +313,222 @@ variable "webapp_service_account_description" {
 variable "webapp_service_account_permissions" {
   type = string
 }
+
+variable "topic_schema_name" {
+  type = string
+}
+
+variable "topic_schema_type" {
+  type = string
+}
+
+variable "topic_schema_definition" {
+  type = string
+}
+
+variable "topic_name" {
+  type = string
+}
+
+variable "topic_message_retention_duration" {
+  type = string
+}
+
+variable "topic_schema_encoding" {
+  type = string
+}
+
+variable "subscription_service_account_id" {
+  type = string
+}
+
+variable "subscription_service_account_name" {
+  type = string
+}
+
+variable "cloud_function_service_account_id" {
+  type = string
+}
+
+variable "cloud_function_service_account_name" {
+  type = string
+}
+
+variable "bucket_name_prefix_random_byte_length" {
+  type = number
+}
+
+variable "bucket_name_postfix" {
+  type = string
+}
+
+variable "bucket_storage_class" {
+  type = string
+}
+
+variable "bucket_location" {
+  type = string
+}
+
+variable "bucket_uniform_level_access" {
+  type = bool
+}
+
+variable "bucket_force_destroy" {
+  type = bool
+}
+
+variable "archive_file_type" {
+  type = string
+}
+
+variable "archive_file_output_path" {
+  type = string
+}
+
+variable "archive_file_source_dir" {
+  type = string
+}
+
+variable "bucket_object_name" {
+  type = string
+}
+
+variable "db_vpc_connector_name" {
+  type = string
+}
+
+variable "db_vpc_connector_ip_range" {
+  type = string
+}
+
+variable "db_vpc_connector_machine_type" {
+  type = string
+}
+
+variable "db_vpc_connector_min_instances" {
+  type = number
+}
+
+variable "db_vpc_connector_max_instances" {
+  type = number
+}
+
+variable "db_vpc_connector_region" {
+  type = string
+}
+
+variable "allow_db_firewall_cf_name" {
+  type = string
+}
+
+variable "allow_db_firewall_cf_direction" {
+  type = string
+}
+
+variable "allow_db_firewall_cf_priority" {
+  type = number
+}
+
+variable "cloud_function_name" {
+  type = string
+}
+
+variable "cloud_function_location" {
+  type = string
+}
+
+variable "cloud_function_runtime" {
+  type = string
+}
+
+variable "cloud_function_entry_point" {
+  type = string
+}
+
+variable "cloud_function_timeout_seconds" {
+  type = number
+}
+
+variable "cloud_function_memory" {
+  type = string
+}
+
+variable "cloud_function_cpu" {
+  type = string
+}
+
+variable "cloud_function_all_traffic_latest" {
+  type = bool
+}
+
+variable "cloud_function_ingress_settings" {
+  type = string
+}
+
+variable "cloud_function_min_instances" {
+  type = number
+}
+
+variable "cloud_function_max_instances" {
+  type = number
+}
+
+variable "cloud_function_vpc_egress_settings" {
+  type = string
+}
+
+variable "cloud_function_event_trigger_region" {
+  type = string
+}
+
+variable "cloud_function_event_trigger_event_type" {
+  type = string
+}
+
+variable "cloud_function_event_trigger_retry_policy" {
+  type = string
+}
+
+variable "subscription_service_account_binding_role" {
+  type = string
+}
+
+variable "webapp_service_account_binding_role" {
+  type = string
+}
+
+variable "SEND_GRID_KEY" {
+  type      = string
+  sensitive = true
+}
+
+variable "SEND_GRID_FROM" {
+  type      = string
+  sensitive = true
+}
+
+variable "SEND_GRID_TEMPLATE_ID" {
+  type      = string
+  sensitive = true
+}
+
+variable "DOMAIN_PROTOCOL" {
+  type      = string
+  sensitive = true
+}
+
+variable "DOMAIN_NAME" {
+  type      = string
+  sensitive = true
+}
+
+variable "WEBAPP_PORT" {
+  type      = string
+  sensitive = true
+}
+
+variable "EXPIRY_BUFFER" {
+  type      = number
+  sensitive = true
+}

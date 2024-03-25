@@ -14,6 +14,8 @@ data "template_file" "startup" {
     DB_HOST       = google_sql_database_instance.db_instance.private_ip_address
     ENVIRONMENT   = var.environment
     LOG_FILE_PATH = var.log_file_path
+    TOPIC_NAME    = var.topic_name
+    EXPIRY_BUFFER = var.EXPIRY_BUFFER
   }
 }
 

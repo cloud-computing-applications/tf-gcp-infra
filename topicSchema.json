@@ -1,0 +1,23 @@
+{
+    "type" : "record",
+    "name" : "Avro",
+    "fields" : [
+        {
+            "name" : "user_id",
+            "type" : "string"
+        },
+        {
+            "name" : "username",
+            "type" : "string"
+        },
+        {
+            "name" : "first_name",
+            "type" : "string"
+        },
+        {
+            "name" : "expiry_buffer",
+            "type" : "int"
+        }
+    ]
+}
+   
