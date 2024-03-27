@@ -201,7 +201,8 @@
       - WEBAPP_PORT - Port on which the server is running
 
     - Role Bindings
-      - subscription_service_account_binding_role - Role to be bound to subscription service account for cloud function resource
+      - subscription_service_account_binding_role_for_cf - Role to be bound to subscription service account for cloud function resource
+      - subscription_service_account_binding_role_for_topic - Role to be bound to subscription service account for topic resource
       - webapp_service_account_binding_role - Role to be bound to webapp serice account for the created topic resource
 
 ## Instructions
