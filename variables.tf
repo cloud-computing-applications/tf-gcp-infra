@@ -490,7 +490,11 @@ variable "cloud_function_event_trigger_retry_policy" {
   type = string
 }
 
-variable "subscription_service_account_binding_role" {
+variable "subscription_service_account_binding_role_for_cf" {
+  type = string
+}
+
+variable "subscription_service_account_binding_role_for_topic" {
   type = string
 }
 

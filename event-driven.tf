@@ -14,22 +14,6 @@ resource "google_pubsub_topic" "verify_email_topic" {
   }
 }
 
-data "google_iam_policy" "webapp-service-account-binding" {
-  depends_on = [google_service_account.webapp-service-account]
-  binding {
-    role = var.webapp_service_account_binding_role
-    members = [
-      google_service_account.webapp-service-account.member
-    ]
-  }
-}
-
-resource "google_pubsub_topic_iam_policy" "policy" {
-  project     = google_pubsub_topic.verify_email_topic.project
-  topic       = google_pubsub_topic.verify_email_topic.name
-  policy_data = data.google_iam_policy.webapp-service-account-binding.policy_data
-}
-
 resource "google_service_account" "sub-service-account" {
   account_id   = var.subscription_service_account_id
   display_name = var.subscription_service_account_name
@@ -38,6 +22,33 @@ resource "google_service_account" "sub-service-account" {
 resource "google_service_account" "cloud-function-service-account" {
   account_id   = var.cloud_function_service_account_id
   display_name = var.cloud_function_service_account_name
+}
+
+data "google_iam_policy" "topic_binding" {
+  depends_on = [
+    google_service_account.webapp-service-account,
+    google_service_account.sub-service-account
+  ]
+
+  binding {
+    role = var.webapp_service_account_binding_role
+    members = [
+      google_service_account.webapp-service-account.member
+    ]
+  }
+
+  binding {
+    role = var.subscription_service_account_binding_role_for_topic
+    members = [
+      google_service_account.sub-service-account.member
+    ]
+  }
+}
+
+resource "google_pubsub_topic_iam_policy" "policy" {
+  project     = google_pubsub_topic.verify_email_topic.project
+  topic       = google_pubsub_topic.verify_email_topic.name
+  policy_data = data.google_iam_policy.topic_binding.policy_data
 }
 
 resource "random_id" "bucket_prefix" {
@@ -94,6 +105,7 @@ resource "google_cloudfunctions2_function" "verify_email_function" {
     google_service_account.sub-service-account,
     google_service_account.cloud-function-service-account,
     google_pubsub_topic.verify_email_topic,
+    google_pubsub_topic_iam_policy.policy,
     google_storage_bucket_object.serverless,
     google_sql_database_instance.db_instance,
     google_sql_user.db_user,
@@ -153,7 +165,7 @@ resource "google_cloudfunctions2_function" "verify_email_function" {
 data "google_iam_policy" "sub-service-account-binding" {
   depends_on = [google_service_account.sub-service-account]
   binding {
-    role = var.subscription_service_account_binding_role
+    role = var.subscription_service_account_binding_role_for_cf
     members = [
       google_service_account.sub-service-account.member
     ]
