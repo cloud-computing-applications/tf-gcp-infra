@@ -5,7 +5,6 @@ resource "google_compute_global_address" "db_ps_ip_range" {
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
-    google_compute_firewall.webapp-http-firewall
   ]
   provider      = google-beta
   project       = google_compute_network.vpc.project
@@ -24,7 +23,6 @@ resource "google_service_networking_connection" "db_ps_connection" {
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
-    google_compute_firewall.webapp-http-firewall,
     google_compute_global_address.db_ps_ip_range
   ]
   provider                = google-beta
@@ -45,7 +43,6 @@ resource "google_sql_database_instance" "db_instance" {
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
-    google_compute_firewall.webapp-http-firewall,
     google_compute_global_address.db_ps_ip_range,
     google_service_networking_connection.db_ps_connection
   ]

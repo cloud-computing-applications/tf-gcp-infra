@@ -46,87 +46,6 @@ variable "deny_all_firewall_priority" {
   type = number
 }
 
-
-variable "webapp_allow_http_firewall_name" {
-  type = string
-}
-
-variable "webapp_allow_http_firewall_direction" {
-  type = string
-}
-
-variable "webapp_allow_http_source_range" {
-  type = string
-}
-
-variable "webapp_allow_http_protocol" {
-  type = string
-}
-
-variable "webapp_tcp_port" {
-  type = string
-}
-
-variable "webapp_allow_http_tag" {
-  type = string
-}
-
-variable "webapp_allow_http_priority" {
-  type = number
-}
-
-variable "webpp_instance_template_name" {
-  type = string
-}
-
-variable "webapp_instance_template_machine_type" {
-  type = string
-}
-
-variable "webapp_instance_template_is_boot_disk" {
-  type = bool
-}
-
-variable "webapp_instance_template_auto_delete_disk" {
-  type = bool
-}
-
-variable "webapp_instance_template_disk_size" {
-  type = number
-}
-
-variable "webapp_instance_template_disk_type" {
-  type = string
-}
-
-variable "webapp_instance_template_can_ip_forward" {
-  type = bool
-}
-
-variable "webapp_instance_template_provisioning_model" {
-  type = string
-}
-
-variable "webapp_instance_template_automatic_restart" {
-  type = bool
-}
-
-variable "webapp_instance_template_on_host_maintenance" {
-  type = string
-}
-
-variable "webapp_image_family" {
-  type = string
-}
-
-variable "webapp_service_account_scopes" {
-  type = string
-}
-
-variable "webapp_startup_script_path" {
-  type = string
-}
-
 variable "db_subnet_name" {
   type = string
 }
@@ -552,6 +471,86 @@ variable "EXPIRY_BUFFER" {
   sensitive = true
 }
 
+variable "webapp_allow_hc_firewall_name" {
+  type = string
+}
+
+variable "webapp_allow_hc_source_range_1" {
+  type = string
+}
+
+variable "webapp_allow_hc_source_range_2" {
+  type = string
+}
+
+variable "webapp_allow_hc_protocol" {
+  type = string
+}
+
+variable "webapp_allow_hc_firewall_direction" {
+  type = string
+}
+
+variable "webapp_allow_hc_tag" {
+  type = string
+}
+
+variable "webapp_allow_hc_priority" {
+  type = number
+}
+
+variable "webpp_instance_template_name" {
+  type = string
+}
+
+variable "webapp_instance_template_machine_type" {
+  type = string
+}
+
+variable "webapp_instance_template_is_boot_disk" {
+  type = bool
+}
+
+variable "webapp_instance_template_auto_delete_disk" {
+  type = bool
+}
+
+variable "webapp_instance_template_disk_size" {
+  type = number
+}
+
+variable "webapp_instance_template_disk_type" {
+  type = string
+}
+
+variable "webapp_instance_template_can_ip_forward" {
+  type = bool
+}
+
+variable "webapp_instance_template_provisioning_model" {
+  type = string
+}
+
+variable "webapp_instance_template_automatic_restart" {
+  type = bool
+}
+
+variable "webapp_instance_template_on_host_maintenance" {
+  type = string
+}
+
+variable "webapp_image_family" {
+  type = string
+}
+
+variable "webapp_service_account_scopes" {
+  type = string
+}
+
+variable "webapp_startup_script_path" {
+  type = string
+}
+
 variable "webapp_health_check_name" {
   type = string
 }
@@ -645,5 +644,97 @@ variable "webapp_auto_scaler_cpu_target" {
 }
 
 variable "webapp_auto_scaler_predictive_method" {
+  type = string
+}
+
+variable "webapp_auto_scaler_scale_in_time_window" {
+  type = number
+}
+
+variable "google_managed_certificate_name" {
+  type = string
+}
+
+variable "lb_load_balancing_scheme" {
+  type = string
+}
+
+variable "lb_backend_service_name" {
+  type = string
+}
+
+variable "lb_backend_service_protocol" {
+  type = string
+}
+
+variable "lb_backend_session_affinity" {
+  type = string
+}
+
+variable "lb_backend_timeout_sec" {
+  type = number
+}
+
+variable "lb_backend_connection_draining_timeout_sec" {
+  type = number
+}
+
+variable "lb_backend_locality_lb_policy" {
+  type = string
+}
+
+variable "lb_backend_balancing_mode" {
+  type = string
+}
+
+variable "lb_backend_max_utilization" {
+  type = number
+}
+
+variable "lb_backend_capacity_scaler" {
+  type = number
+}
+
+variable "lb_backend_log_enable" {
+  type = bool
+}
+
+variable "lb_backend_log_sample_rate" {
+  type = number
+}
+
+variable "lb_target_proxy_name" {
+  type = string
+}
+
+variable "lb_target_proxy_http_keep_alive_timeout_sec" {
+  type = number
+}
+
+variable "lb_url_map_name" {
+  type = string
+}
+
+variable "lb_url_map_host" {
+  type = string
+}
+
+variable "lb_url_map_path_matcher" {
+  type = string
+}
+
+variable "lb_forwarding_rule_name" {
+  type = string
+}
+
+variable "lb_forwarding_rule_ip_protocol" {
+  type = string
+}
+
+variable "lb_forwarding_rule_ip_version" {
+  type = string
+}
+
+variable "lb_forwarding_rule_port_range" {
   type = string
 }
