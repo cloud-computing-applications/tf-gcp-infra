@@ -47,17 +47,3 @@ resource "google_compute_firewall" "deny-all-firewall" {
     protocol = var.deny_all_firewall_protocol
   }
 }
-
-resource "google_compute_firewall" "webapp-http-firewall" {
-  name               = var.webapp_allow_http_firewall_name
-  network            = google_compute_network.vpc.id
-  direction          = var.webapp_allow_http_firewall_direction
-  source_ranges      = [var.webapp_allow_http_source_range]
-  destination_ranges = [var.webapp_subnet_cidr]
-  target_tags        = [var.webapp_allow_http_tag]
-  priority           = var.webapp_allow_http_priority
-  allow {
-    protocol = var.webapp_allow_http_protocol
-    ports    = [var.webapp_tcp_port]
-  }
-}

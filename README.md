@@ -37,30 +37,6 @@
       - deny_all_firewall_protocol - protocol on which the firewall denies traffic
       - deny_all_firewall_priority - priority of the deny_all firewall
 
-    - Webapp allow firewall
-      - webapp-allow-http-firewall_name - Name of http firewall applied on your webapp subnet
-      - webapp_allow_http_firewall_direction - Direction of traffic to which the firewall applies
-      - webapp_tcp_port - port of your webapp application to be accessed from internet
-      - webapp_allow_http_tag - acts as target tag and network tag for your webapp-allow-http-firewall firewall and webapp instance respectively
-      - webapp_allow_http_source_range - source IP range for which the firewall applies
-      - webapp_allow_http_protocol - protocol on which the firewall allows traffic
-      - webapp_allow_http_priority - priority of the webapp-allow-http firewall
-
-    - Webapp instance template
-      - webpp_instance_template_name - webapp instance name
-      - webapp_machine_template_type - webapp instance machine type
-      - webapp_instance_disk_template_size - webapp instance disk size
-      - webapp_instance_disk_template_type - webapp instance disk type
-      - webapp_instance_template_is_boot_disk - Whether the disk is boot disk
-      - webapp_instance_template_auto_delete_disk - Whether to auto delete the disk
-      - webapp_instance_template_can_ip_forward - Whether webapp instance can ip forward
-      - webapp_instance_template_provisioning_model - provisioning model for webapp instance
-      - webapp_instance_template_automatic_restart - Whether the instance should be automatically restarted if it is terminated by Compute Engine
-      - webapp_instance_template_on_host_maintenance - Maintenance behavior for webapp instance
-      - webapp_image_family - family name of the application image you created for your webapp
-      - webapp_service_account_scopes - Comma seperated string containing scopes provided to the webapp instance
-      - webapp_startup_script_path - path to the start up script that will run on webapp instance
-
     - DB subnet
       - db_subnet_name - Name of your db subnet
       - db_subnet_cidr - db subnet IP address range in CIDR
@@ -127,8 +103,8 @@
     
     - Webapp DNS Zone
       - dns_zone_name - Name of DNS zone you created for webapp
-      - webapp_a_rs_type - A record type for webapp (should be "A")
-      - webapp_a_rs_ttl - Time to live for the A record of webapp
+      - webapp_a_rs_type - A record type for webapp load balancer (should be "A")
+      - webapp_a_rs_ttl - Time to live for the A record
 
     - Service account for webapp instance
       - webapp_service_account_name - Service account name to be created and used for webapp instance
@@ -208,6 +184,30 @@
       - subscription_service_account_binding_role_for_cf - Role to be bound to subscription service account for cloud function resource
       - subscription_service_account_binding_role_for_topic - Role to be bound to subscription service account for topic resource
       - webapp_service_account_binding_role - Role to be bound to webapp serice account for the created topic resource
+
+    - Webapp allow health check firewall
+      - webapp_allow_hc_firewall_name - Name of http firewall applied on your webapp instances
+      - webapp_allow_hc_firewall_direction - Direction of traffic to which the firewall applies
+      - webapp_allow_hc_tag - target tag for your firewall to be used by webapp instances
+      - webapp_allow_hc_source_range_1 - 1st source IP range Google Cloud health checking systems
+      - webapp_allow_hc_source_range_2 - 2nd source IP range Google Cloud health checking systems
+      - webapp_allow_hc_protocol - protocol on which the firewall allows traffic
+      - webapp_allow_hc_priority - priority of the firewall
+
+    - Webapp instance template
+      - webpp_instance_template_name - webapp instance name
+      - webapp_machine_template_type - webapp instance machine type
+      - webapp_instance_disk_template_size - webapp instance disk size
+      - webapp_instance_disk_template_type - webapp instance disk type
+      - webapp_instance_template_is_boot_disk - Whether the disk is boot disk
+      - webapp_instance_template_auto_delete_disk - Whether to auto delete the disk
+      - webapp_instance_template_can_ip_forward - Whether webapp instance can ip forward
+      - webapp_instance_template_provisioning_model - provisioning model for webapp instance
+      - webapp_instance_template_automatic_restart - Whether the instance should be automatically restarted if it is terminated by Compute Engine
+      - webapp_instance_template_on_host_maintenance - Maintenance behavior for webapp instance
+      - webapp_image_family - family name of the application image you created for your webapp
+      - webapp_service_account_scopes - Comma seperated string containing scopes provided to the webapp instance
+      - webapp_startup_script_path - path to the start up script that will run on webapp instance
     
     - Webapp health check
       - webapp_health_check_name - Name of webapp health check
@@ -238,6 +238,41 @@
       - webapp_auto_scaler_mode - auto scaling mode
       - webapp_auto_scaler_cpu_target - target cpu utilization after which resources are scaled up
       - webapp_auto_scaler_predictive_method - predictive scaling method
+      - webapp_auto_scaler_scale_in_time_window - Amount of time autoscaling should look for deciding scaling in
+    
+    - Google Managed Certificate
+      - google_managed_certificate_name - Name of the ssl certificate that will be created for your domain
+
+    - External Load balancer for webapp
+      - lb_load_balancing_scheme - Load balancing scheme of the load balancer
+      
+      - LB Backend Service
+        - lb_backend_service_name: Name of the backend service for the load balancer
+        - lb_backend_service_protocol: Protocol used by the backend service (e.g., HTTP)
+        - lb_backend_session_affinity: Session affinity type for the backend service (e.g., NONE)
+        - lb_backend_timeout_sec: Timeout duration for backend connections in seconds
+        - lb_backend_connection_draining_timeout_sec: Timeout duration for draining connections from the backend service in seconds
+        - lb_backend_locality_lb_policy: Locality-based load balancing policy for the backend service (e.g., ROUND_ROBIN)
+        - lb_backend_balancing_mode: Load balancing mode for the backend service (e.g., UTILIZATION)
+        - lb_backend_max_utilization: Maximum utilization threshold for the backend service
+        - lb_backend_capacity_scaler: Capacity scaler for the backend service
+        - lb_backend_log_enable: Flag to enable logging for the backend service
+        - lb_backend_log_sample_rate: Sampling rate for logging requests to the backend service
+      
+      - LB Target Proxy
+        - lb_target_proxy_name: Name of the target proxy for the load balancer
+        - lb_target_proxy_http_keep_alive_timeout_sec: HTTP keep-alive timeout duration for the target proxy in seconds
+      
+      - LB URL Map
+        - lb_url_map_name: Name of the URL map for the load balancer
+        - lb_url_map_host: Host pattern for URL map routing
+        - lb_url_map_path_matcher: Path matcher pattern for URL map routing
+
+      - LB Forwarding Rule
+        - lb_forwarding_rule_name: Name of the forwarding rule for the load balancer
+        - lb_forwarding_rule_ip_protocol: IP protocol used by the forwarding rule (e.g., TCP)
+        - lb_forwarding_rule_ip_version: IP version used by the forwarding rule (e.g., IPV4)
+        - lb_forwarding_rule_port_range: Port range for the forwarding rule (e.g., 443)
 
 ## Instructions
 1. Initialize terraform using ```terraform init```

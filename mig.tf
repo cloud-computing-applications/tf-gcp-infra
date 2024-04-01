@@ -47,6 +47,20 @@ resource "google_project_iam_binding" "webapp-service-account-permissions" {
   ]
 }
 
+resource "google_compute_firewall" "webapp-allow-hc" {
+  name = var.webapp_allow_hc_firewall_name
+  allow {
+    protocol = var.webapp_allow_hc_protocol
+    ports    = [var.application_port]
+  }
+  direction          = var.webapp_allow_hc_firewall_direction
+  network            = google_compute_network.vpc.id
+  priority           = var.webapp_allow_hc_priority
+  source_ranges      = [var.webapp_allow_hc_source_range_1, var.webapp_allow_hc_source_range_2]
+  destination_ranges = [var.webapp_subnet_cidr]
+  target_tags        = [var.webapp_allow_hc_tag]
+}
+
 resource "google_compute_region_instance_template" "webapp-instance-template" {
   depends_on = [
     google_compute_network.vpc,
@@ -54,7 +68,7 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
     google_compute_subnetwork.db-subnet,
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
-    google_compute_firewall.webapp-http-firewall,
+    google_compute_firewall.webapp-allow-hc,
     google_sql_database_instance.db_instance,
     google_sql_user.db_user,
     google_sql_database.database,
@@ -70,7 +84,7 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
   machine_type   = var.webapp_instance_template_machine_type
   region         = var.webapp_subnet_region
   can_ip_forward = var.webapp_instance_template_can_ip_forward
-  tags           = [var.webapp_allow_http_tag, var.allow_db_http_tag]
+  tags           = [var.webapp_allow_hc_tag, var.allow_db_http_tag]
 
   scheduling {
     provisioning_model  = var.webapp_instance_template_provisioning_model
@@ -114,6 +128,10 @@ resource "google_compute_health_check" "webapp-health-check" {
 }
 
 resource "google_compute_region_instance_group_manager" "webapp-instance-manager" {
+  depends_on = [
+    google_compute_region_instance_template.webapp-instance-template,
+    google_compute_health_check.webapp-health-check
+  ]
   name                             = var.webapp_igm_name
   base_instance_name               = var.webapp_igm_base_instance_name
   provider                         = google-beta
@@ -150,6 +168,8 @@ resource "google_compute_region_instance_group_manager" "webapp-instance-manager
 }
 
 resource "google_compute_region_autoscaler" "webapp-auto-scaler" {
+  depends_on = [google_compute_region_instance_group_manager.webapp-instance-manager]
+
   name     = var.webapp_auto_scaler_name
   region   = var.webapp_subnet_region
   provider = google-beta
@@ -164,6 +184,13 @@ resource "google_compute_region_autoscaler" "webapp-auto-scaler" {
     cpu_utilization {
       target            = var.webapp_auto_scaler_cpu_target
       predictive_method = var.webapp_auto_scaler_predictive_method
+    }
+
+    scale_in_control {
+      max_scaled_in_replicas {
+        fixed = var.webapp_auto_scaler_max_replicas - 1
+      }
+      time_window_sec = var.webapp_auto_scaler_scale_in_time_window
     }
   }
 }
