@@ -145,7 +145,7 @@ resource "google_cloudfunctions2_function" "verify_email_function" {
       SEND_GRID_TEMPLATE_ID = var.SEND_GRID_TEMPLATE_ID
       DOMAIN_PROTOCOL       = var.DOMAIN_PROTOCOL
       DOMAIN_NAME           = var.DOMAIN_NAME
-      WEBAPP_PORT           = var.WEBAPP_PORT
+      WEBAPP_PORT           = var.application_port
       DB_USERNAME           = google_sql_user.db_user.name
       DB_PASSWORD           = google_sql_user.db_user.password
       DB_DATABASE           = google_sql_database.database.name

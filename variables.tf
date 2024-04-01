@@ -75,23 +75,43 @@ variable "webapp_allow_http_priority" {
   type = number
 }
 
-variable "webpp_instance_name" {
+variable "webpp_instance_template_name" {
   type = string
 }
 
-variable "webapp_machine_type" {
+variable "webapp_instance_template_machine_type" {
   type = string
 }
 
-variable "webapp_instance_zone" {
-  type = string
+variable "webapp_instance_template_is_boot_disk" {
+  type = bool
 }
 
-variable "webapp_instance_disk_size" {
+variable "webapp_instance_template_auto_delete_disk" {
+  type = bool
+}
+
+variable "webapp_instance_template_disk_size" {
   type = number
 }
 
-variable "webapp_instance_disk_type" {
+variable "webapp_instance_template_disk_type" {
+  type = string
+}
+
+variable "webapp_instance_template_can_ip_forward" {
+  type = bool
+}
+
+variable "webapp_instance_template_provisioning_model" {
+  type = string
+}
+
+variable "webapp_instance_template_automatic_restart" {
+  type = bool
+}
+
+variable "webapp_instance_template_on_host_maintenance" {
   type = string
 }
 
@@ -527,12 +547,103 @@ variable "DOMAIN_NAME" {
   sensitive = true
 }
 
-variable "WEBAPP_PORT" {
-  type      = string
-  sensitive = true
-}
-
 variable "EXPIRY_BUFFER" {
   type      = number
   sensitive = true
+}
+
+variable "webapp_health_check_name" {
+  type = string
+}
+
+variable "webapp_health_check_interval" {
+  type = number
+}
+
+variable "webapp_health_check_timeout" {
+  type = number
+}
+
+variable "webapp_health_check_healthy_threshold" {
+  type = number
+}
+
+variable "webapp_health_check_unhealthy_threshold" {
+  type = number
+}
+
+variable "webapp_health_check_request_path" {
+  type = string
+}
+
+variable "webapp_igm_name" {
+  type = string
+}
+
+variable "webapp_igm_base_instance_name" {
+  type = string
+}
+
+variable "webapp_igm_distribution_policy_zones" {
+  type = string
+}
+
+variable "webapp_igm_distribution_policy_target_shape" {
+  type = string
+}
+
+variable "webapp_igm_update_policy_type" {
+  type = string
+}
+
+variable "webapp_igm_instance_redistribution_type" {
+  type = string
+}
+
+variable "webapp_igm_update_policy_minimal_action" {
+  type = string
+}
+
+variable "webapp_igm_force_update_on_repair" {
+  type = string
+}
+
+variable "webapp_igm_default_action_on_failure" {
+  type = string
+}
+
+variable "webapp_igm_named_port_name" {
+  type = string
+}
+
+variable "webapp_igm_hc_inital_delay" {
+  type = number
+}
+
+variable "webapp_auto_scaler_name" {
+  type = string
+}
+
+variable "webapp_auto_scaler_max_replicas" {
+  type = number
+}
+
+variable "webapp_auto_scaler_min_replicas" {
+  type = number
+}
+
+variable "webapp_auto_scaler_cooldown_period" {
+  type = number
+}
+
+variable "webapp_auto_scaler_mode" {
+  type = string
+}
+
+variable "webapp_auto_scaler_cpu_target" {
+  type = number
+}
+
+variable "webapp_auto_scaler_predictive_method" {
+  type = string
 }

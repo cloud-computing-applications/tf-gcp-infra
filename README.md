@@ -46,12 +46,17 @@
       - webapp_allow_http_protocol - protocol on which the firewall allows traffic
       - webapp_allow_http_priority - priority of the webapp-allow-http firewall
 
-    - Webapp instance
-      - webpp_instance_name - webapp instance name
-      - webapp_machine_type - webapp instance machine type
-      - webapp_instance_zone - webapp instance zone
-      - webapp_instance_disk_size - webapp instance disk size
-      - webapp_instance_disk_type - webapp instance disk type
+    - Webapp instance template
+      - webpp_instance_template_name - webapp instance name
+      - webapp_machine_template_type - webapp instance machine type
+      - webapp_instance_disk_template_size - webapp instance disk size
+      - webapp_instance_disk_template_type - webapp instance disk type
+      - webapp_instance_template_is_boot_disk - Whether the disk is boot disk
+      - webapp_instance_template_auto_delete_disk - Whether to auto delete the disk
+      - webapp_instance_template_can_ip_forward - Whether webapp instance can ip forward
+      - webapp_instance_template_provisioning_model - provisioning model for webapp instance
+      - webapp_instance_template_automatic_restart - Whether the instance should be automatically restarted if it is terminated by Compute Engine
+      - webapp_instance_template_on_host_maintenance - Maintenance behavior for webapp instance
       - webapp_image_family - family name of the application image you created for your webapp
       - webapp_service_account_scopes - Comma seperated string containing scopes provided to the webapp instance
       - webapp_startup_script_path - path to the start up script that will run on webapp instance
@@ -198,12 +203,41 @@
       - SEND_GRID_TEMPLATE_ID - Id of the template created on  
       - DOMAIN_PROTOCOL - Protocol for your domain (http or https)
       - DOMAIN_NAME - Domain name
-      - WEBAPP_PORT - Port on which the server is running
 
     - Role Bindings
       - subscription_service_account_binding_role_for_cf - Role to be bound to subscription service account for cloud function resource
       - subscription_service_account_binding_role_for_topic - Role to be bound to subscription service account for topic resource
       - webapp_service_account_binding_role - Role to be bound to webapp serice account for the created topic resource
+    
+    - Webapp health check
+      - webapp_health_check_name - Name of webapp health check
+      - webapp_health_check_interval - check interval for health check
+      - webapp_health_check_timeout - timeout for health check
+      - webapp_health_check_healthy_threshold - healthy threshold for health check
+      - webapp_health_check_unhealthy_threshold - unhealthy threshold for health check
+      - webapp_health_check_request_path - request path for health check
+    
+    - Webapp instance group manager
+      - webapp_igm_name - name of webapp instance group manager
+      - webapp_igm_base_instance_name - name of base instance of webapp instance group manager
+      - webapp_igm_distribution_policy_zones - comma seperated string containing the distribution policy zones for webapp instance group manager
+      - webapp_igm_distribution_policy_target_shape - distribution policy target shape for webapp instance group manager
+      - webapp_igm_update_policy_type - update policy type
+      - webapp_igm_instance_redistribution_type - instance redistribution type (use "NONE" for "BALANCED" policy target shape)
+      - webapp_igm_update_policy_minimal_action - minimal action of update policy
+      - webapp_igm_force_update_on_repair - Whether to force update the configurations on repair 
+      - webapp_igm_default_action_on_failure - default action on failure
+      - webapp_igm_named_port_name - name of the named port
+      - webapp_igm_hc_inital_delay - initial health check delay after machine initialization
+    
+    - Webapp auto scaler
+      - webapp_auto_scaler_name - name of auto scaler
+      - webapp_auto_scaler_max_replicas - maximum replicas
+      - webapp_auto_scaler_min_replicas - minimum replicas
+      - webapp_auto_scaler_cooldown_period - The number of seconds that the autoscaler should wait before it starts collecting information from a new instance.
+      - webapp_auto_scaler_mode - auto scaling mode
+      - webapp_auto_scaler_cpu_target - target cpu utilization after which resources are scaled up
+      - webapp_auto_scaler_predictive_method - predictive scaling method
 
 ## Instructions
 1. Initialize terraform using ```terraform init```
