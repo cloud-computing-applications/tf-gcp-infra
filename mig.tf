@@ -114,15 +114,15 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
   }
 }
 
-resource "google_compute_health_check" "webapp-health-check" {
-  name                = var.webapp_health_check_name
-  check_interval_sec  = var.webapp_health_check_interval
-  timeout_sec         = var.webapp_health_check_timeout
-  healthy_threshold   = var.webapp_health_check_healthy_threshold
-  unhealthy_threshold = var.webapp_health_check_unhealthy_threshold
+resource "google_compute_health_check" "webapp-health-check-igm" {
+  name                = var.webapp_health_check_igm_name
+  check_interval_sec  = var.webapp_health_check_igm_interval
+  timeout_sec         = var.webapp_health_check_igm_timeout
+  healthy_threshold   = var.webapp_health_check_igm_healthy_threshold
+  unhealthy_threshold = var.webapp_health_check_igm_unhealthy_threshold
 
   http_health_check {
-    request_path = var.webapp_health_check_request_path
+    request_path = var.webapp_health_check_igm_request_path
     port         = var.application_port
   }
 }
@@ -130,7 +130,7 @@ resource "google_compute_health_check" "webapp-health-check" {
 resource "google_compute_region_instance_group_manager" "webapp-instance-manager" {
   depends_on = [
     google_compute_region_instance_template.webapp-instance-template,
-    google_compute_health_check.webapp-health-check
+    google_compute_health_check.webapp-health-check-igm
   ]
   name                             = var.webapp_igm_name
   base_instance_name               = var.webapp_igm_base_instance_name
@@ -162,7 +162,7 @@ resource "google_compute_region_instance_group_manager" "webapp-instance-manager
   }
 
   auto_healing_policies {
-    health_check      = google_compute_health_check.webapp-health-check.id
+    health_check      = google_compute_health_check.webapp-health-check-igm.id
     initial_delay_sec = var.webapp_igm_hc_inital_delay
   }
 }

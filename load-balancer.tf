@@ -6,14 +6,27 @@ resource "google_compute_managed_ssl_certificate" "webapp-ssl-cert" {
   }
 }
 
+resource "google_compute_health_check" "webapp-health-check-lb" {
+  name                = var.webapp_health_check_lb_name
+  check_interval_sec  = var.webapp_health_check_lb_interval
+  timeout_sec         = var.webapp_health_check_lb_timeout
+  healthy_threshold   = var.webapp_health_check_lb_healthy_threshold
+  unhealthy_threshold = var.webapp_health_check_lb_unhealthy_threshold
+
+  http_health_check {
+    request_path = var.webapp_health_check_lb_request_path
+    port         = var.application_port
+  }
+}
+
 resource "google_compute_backend_service" "lb-backend" {
   depends_on = [
-    google_compute_health_check.webapp-health-check,
+    google_compute_health_check.webapp-health-check-lb,
     google_compute_region_instance_group_manager.webapp-instance-manager
   ]
   name                            = var.lb_backend_service_name
   load_balancing_scheme           = var.lb_load_balancing_scheme
-  health_checks                   = [google_compute_health_check.webapp-health-check.id]
+  health_checks                   = [google_compute_health_check.webapp-health-check-lb.id]
   protocol                        = var.lb_backend_service_protocol
   port_name                       = var.webapp_igm_named_port_name
   session_affinity                = var.lb_backend_session_affinity
