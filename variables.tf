@@ -551,27 +551,51 @@ variable "webapp_startup_script_path" {
   type = string
 }
 
-variable "webapp_health_check_name" {
+variable "webapp_health_check_igm_name" {
   type = string
 }
 
-variable "webapp_health_check_interval" {
+variable "webapp_health_check_igm_interval" {
   type = number
 }
 
-variable "webapp_health_check_timeout" {
+variable "webapp_health_check_igm_timeout" {
   type = number
 }
 
-variable "webapp_health_check_healthy_threshold" {
+variable "webapp_health_check_igm_healthy_threshold" {
   type = number
 }
 
-variable "webapp_health_check_unhealthy_threshold" {
+variable "webapp_health_check_igm_unhealthy_threshold" {
   type = number
 }
 
-variable "webapp_health_check_request_path" {
+variable "webapp_health_check_igm_request_path" {
+  type = string
+}
+
+variable "webapp_health_check_lb_name" {
+  type = string
+}
+
+variable "webapp_health_check_lb_interval" {
+  type = number
+}
+
+variable "webapp_health_check_lb_timeout" {
+  type = number
+}
+
+variable "webapp_health_check_lb_healthy_threshold" {
+  type = number
+}
+
+variable "webapp_health_check_lb_unhealthy_threshold" {
+  type = number
+}
+
+variable "webapp_health_check_lb_request_path" {
   type = string
 }
 

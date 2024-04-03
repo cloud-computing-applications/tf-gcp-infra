@@ -208,14 +208,22 @@
       - webapp_image_family - family name of the application image you created for your webapp
       - webapp_service_account_scopes - Comma seperated string containing scopes provided to the webapp instance
       - webapp_startup_script_path - path to the start up script that will run on webapp instance
+
+    - Webapp health check for IGM
+      - webapp_health_check_igm_name - Name of webapp health check
+      - webapp_health_check_igm_interval - check interval for health check
+      - webapp_health_check_igm_timeout - timeout for health check
+      - webapp_health_check_igm_healthy_threshold - healthy threshold for health check
+      - webapp_health_check_igm_unhealthy_threshold - unhealthy threshold for health check
+      - webapp_health_check_igm_request_path - request path for health check 
     
-    - Webapp health check
-      - webapp_health_check_name - Name of webapp health check
-      - webapp_health_check_interval - check interval for health check
-      - webapp_health_check_timeout - timeout for health check
-      - webapp_health_check_healthy_threshold - healthy threshold for health check
-      - webapp_health_check_unhealthy_threshold - unhealthy threshold for health check
-      - webapp_health_check_request_path - request path for health check
+    - Webapp health check for LB
+      - webapp_health_check_lb_name - Name of webapp health check
+      - webapp_health_check_lb_interval - check interval for health check
+      - webapp_health_check_lb_timeout - timeout for health check
+      - webapp_health_check_lb_healthy_threshold - healthy threshold for health check
+      - webapp_health_check_lb_unhealthy_threshold - unhealthy threshold for health check
+      - webapp_health_check_lb_request_path - request path for health check
     
     - Webapp instance group manager
       - webapp_igm_name - name of webapp instance group manager
