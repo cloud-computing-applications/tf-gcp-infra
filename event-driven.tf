@@ -56,11 +56,16 @@ resource "random_id" "bucket_prefix" {
 }
 
 resource "google_storage_bucket" "serverless_bucket" {
+  depends_on = [google_kms_crypto_key_iam_binding.storage_crypto_key_binding]
+
   name                        = "${random_id.bucket_prefix.hex}-${var.bucket_name_postfix}"
   storage_class               = var.bucket_storage_class
   location                    = var.bucket_location
   uniform_bucket_level_access = var.bucket_uniform_level_access
   force_destroy               = var.bucket_force_destroy
+  encryption {
+    default_kms_key_name = local.bucket_key_id
+  }
 }
 
 data "archive_file" "serverless_archive" {
