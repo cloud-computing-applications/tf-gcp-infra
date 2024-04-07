@@ -77,7 +77,8 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
     data.template_file.startup,
     google_service_account.webapp-service-account,
     google_project_iam_binding.webapp-service-account-permissions,
-    local.webapp_service_account_scopes_array
+    local.webapp_service_account_scopes_array,
+    google_kms_crypto_key_iam_binding.vm_crypto_key_binding
   ]
 
   name           = var.webpp_instance_template_name
@@ -94,10 +95,13 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
 
   disk {
     boot         = var.webapp_instance_template_is_boot_disk
-    source_image = "projects/${var.project_id}/global/images/family/${var.webapp_image_family}"
+    source_image = "projects/${var.project_id}/global/images/${var.webapp_image_name}"
     auto_delete  = var.webapp_instance_template_auto_delete_disk
     disk_type    = var.webapp_instance_template_disk_type
     disk_size_gb = var.webapp_instance_template_disk_size
+    disk_encryption_key {
+      kms_key_self_link = local.vm_key_id
+    }
   }
 
   network_interface {

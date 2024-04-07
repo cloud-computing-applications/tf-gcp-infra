@@ -539,7 +539,7 @@ variable "webapp_instance_template_on_host_maintenance" {
   type = string
 }
 
-variable "webapp_image_family" {
+variable "webapp_image_name" {
   type = string
 }
 
@@ -760,5 +760,61 @@ variable "lb_forwarding_rule_ip_version" {
 }
 
 variable "lb_forwarding_rule_port_range" {
+  type = string
+}
+
+variable "key_ring_name" {
+  type = string
+}
+
+variable "key_ring_create" {
+  type = bool
+}
+
+variable "key_rotation_period" {
+  type = string
+}
+
+variable "key_purpose" {
+  type = string
+}
+
+variable "vm_key_name" {
+  type = string
+}
+
+variable "vm_key_create" {
+  type = bool
+}
+
+variable "sql_key_name" {
+  type = string
+}
+
+variable "sql_key_create" {
+  type = bool
+}
+
+variable "bucket_key_name" {
+  type = string
+}
+
+variable "bucket_key_create" {
+  type = bool
+}
+
+variable "key_binding_role" {
+  type = string
+}
+
+variable "compute_engine_service_agent_domain" {
+  type = string
+}
+
+variable "sql_service_agent_domain" {
+  type = string
+}
+
+variable "storage_bucket_service_agent_domain" {
   type = string
 }

@@ -44,12 +44,14 @@ resource "google_sql_database_instance" "db_instance" {
     google_compute_route.webapp-route,
     google_compute_firewall.deny-all-firewall,
     google_compute_global_address.db_ps_ip_range,
-    google_service_networking_connection.db_ps_connection
+    google_service_networking_connection.db_ps_connection,
+    google_kms_crypto_key_iam_binding.sql_crypto_key_binding
   ]
   name                = "${var.db_instance_name}-${random_id.db_name_suffix.hex}"
   database_version    = var.db_instance_database_version
   region              = var.db_instance_region
   deletion_protection = var.db_instance_deletion_protection
+  encryption_key_name = local.sql_key_id
 
   settings {
     tier              = var.db_instance_tier
