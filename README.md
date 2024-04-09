@@ -17,6 +17,8 @@
     - Eventarc API
     - Cloud Run Admin API
     - Serverless VPC Access API
+    - Cloud Key Management Service (KMS) API
+    - Secret Manager API
 6. Create your custom application image for your webapp and provide an image family name to it
 7. Setup following terraform environment variables in project directory using a "tfvars" file
     - Project and vpc
