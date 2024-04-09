@@ -7,7 +7,7 @@ resource "google_secret_manager_secret" "db_host" {
 }
 
 resource "google_secret_manager_secret_version" "db_host" {
-  secret  = google_secret_manager_secret.db_host.id
+  secret      = google_secret_manager_secret.db_host.id
   secret_data = google_sql_database_instance.db_instance.private_ip_address
 }
 
@@ -20,7 +20,7 @@ resource "google_secret_manager_secret" "db_password" {
 }
 
 resource "google_secret_manager_secret_version" "db_password" {
-  secret  = google_secret_manager_secret.db_password.id
+  secret      = google_secret_manager_secret.db_password.id
   secret_data = google_sql_user.db_user.password
 }
 
@@ -33,6 +33,6 @@ resource "google_secret_manager_secret" "vm_kms_key" {
 }
 
 resource "google_secret_manager_secret_version" "vm_kms_key" {
-  secret  = google_secret_manager_secret.vm_kms_key.id
+  secret      = google_secret_manager_secret.vm_kms_key.id
   secret_data = google_kms_crypto_key.vm_key.id
 }
