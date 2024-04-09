@@ -100,7 +100,7 @@ resource "google_compute_region_instance_template" "webapp-instance-template" {
     disk_type    = var.webapp_instance_template_disk_type
     disk_size_gb = var.webapp_instance_template_disk_size
     disk_encryption_key {
-      kms_key_self_link = local.vm_key_id
+      kms_key_self_link = google_kms_crypto_key.vm_key.id
     }
   }
 

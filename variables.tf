@@ -763,12 +763,8 @@ variable "lb_forwarding_rule_port_range" {
   type = string
 }
 
-variable "key_ring_name" {
+variable "key_ring_name_prefix" {
   type = string
-}
-
-variable "key_ring_create" {
-  type = bool
 }
 
 variable "key_rotation_period" {
@@ -783,24 +779,12 @@ variable "vm_key_name" {
   type = string
 }
 
-variable "vm_key_create" {
-  type = bool
-}
-
 variable "sql_key_name" {
   type = string
 }
 
-variable "sql_key_create" {
-  type = bool
-}
-
 variable "bucket_key_name" {
   type = string
-}
-
-variable "bucket_key_create" {
-  type = bool
 }
 
 variable "key_binding_role" {
@@ -816,5 +800,17 @@ variable "sql_service_agent_domain" {
 }
 
 variable "storage_bucket_service_agent_domain" {
+  type = string
+}
+
+variable "secret_db_host_name" {
+  type = string
+}
+
+variable "secret_db_password_name" {
+  type = string
+}
+
+variable "secret_vm_key_name" {
   type = string
 }

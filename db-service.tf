@@ -51,7 +51,7 @@ resource "google_sql_database_instance" "db_instance" {
   database_version    = var.db_instance_database_version
   region              = var.db_instance_region
   deletion_protection = var.db_instance_deletion_protection
-  encryption_key_name = local.sql_key_id
+  encryption_key_name = google_kms_crypto_key.sql_key.id
 
   settings {
     tier              = var.db_instance_tier
