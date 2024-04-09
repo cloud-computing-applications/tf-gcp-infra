@@ -64,7 +64,7 @@ resource "google_storage_bucket" "serverless_bucket" {
   uniform_bucket_level_access = var.bucket_uniform_level_access
   force_destroy               = var.bucket_force_destroy
   encryption {
-    default_kms_key_name = local.bucket_key_id
+    default_kms_key_name = google_kms_crypto_key.bucket_key.id
   }
 }
 

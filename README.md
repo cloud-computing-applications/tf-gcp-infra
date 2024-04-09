@@ -205,7 +205,7 @@
       - webapp_instance_template_provisioning_model - provisioning model for webapp instance
       - webapp_instance_template_automatic_restart - Whether the instance should be automatically restarted if it is terminated by Compute Engine
       - webapp_instance_template_on_host_maintenance - Maintenance behavior for webapp instance
-      - webapp_image_family - family name of the application image you created for your webapp
+      - webapp_image_name - Name of the application image you created for your webapp
       - webapp_service_account_scopes - Comma seperated string containing scopes provided to the webapp instance
       - webapp_startup_script_path - path to the start up script that will run on webapp instance
 
@@ -281,6 +281,27 @@
         - lb_forwarding_rule_ip_protocol: IP protocol used by the forwarding rule (e.g., TCP)
         - lb_forwarding_rule_ip_version: IP version used by the forwarding rule (e.g., IPV4)
         - lb_forwarding_rule_port_range: Port range for the forwarding rule (e.g., 443)
+      
+      - Key Ring
+        - key_ring_name_prefix: Prefix name for the keyring
+
+      - Keys
+        - key_rotation_period: Rotation period of the keys (eg. 2592000s)
+        - key_purpose: The immutable purpose of this CryptoKey (eg. ENCRYPT_DECRYPT)
+        - vm_key_name: Name of the crypto key for virtual machine
+        - sql_key_name: Name of the crypto key for sql instance
+        - bucket_key_name: Name of the crypto key for cloud storage bucket
+        
+      - Crypto Key IAM binding  
+        - key_binding_role: Role to be bound to service agents for the crypto keys
+        - compute_engine_service_agent_domain: Domain name for compute engine service agent
+        - sql_service_agent_domain: Domain name for sql service agent
+        - storage_bucket_service_agent_domain: Domain name for storage bucket service agent
+      
+      - GCP Secrets
+        - secret_db_host_name: Name of the db host secret
+        - secret_db_password_name: Name of the db password secret
+        - secret_vm_key_name: Name of the vm crypto key secret
 
 ## Instructions
 1. Initialize terraform using ```terraform init```
