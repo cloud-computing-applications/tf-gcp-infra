@@ -145,15 +145,16 @@ resource "google_cloudfunctions2_function" "verify_email_function" {
     vpc_connector                  = google_vpc_access_connector.db-connector.id
     vpc_connector_egress_settings  = var.cloud_function_vpc_egress_settings
     environment_variables = {
-      SEND_GRID_KEY         = var.SEND_GRID_KEY
-      SEND_GRID_FROM        = var.SEND_GRID_FROM
-      SEND_GRID_TEMPLATE_ID = var.SEND_GRID_TEMPLATE_ID
-      DOMAIN_PROTOCOL       = var.DOMAIN_PROTOCOL
-      DOMAIN_NAME           = var.DOMAIN_NAME
-      DB_USERNAME           = google_sql_user.db_user.name
-      DB_PASSWORD           = google_sql_user.db_user.password
-      DB_DATABASE           = google_sql_database.database.name
-      DB_HOST               = google_sql_database_instance.db_instance.private_ip_address
+      SEND_GRID_KEY          = var.SEND_GRID_KEY
+      SEND_GRID_FROM         = var.SEND_GRID_FROM
+      SEND_GRID_TEMPLATE_ID  = var.SEND_GRID_TEMPLATE_ID
+      DOMAIN_PROTOCOL        = var.DOMAIN_PROTOCOL
+      DOMAIN_NAME            = var.DOMAIN_NAME
+      VERIFICATION_END_POINT = var.VERIFICATION_END_POINT
+      DB_USERNAME            = google_sql_user.db_user.name
+      DB_PASSWORD            = google_sql_user.db_user.password
+      DB_DATABASE            = google_sql_database.database.name
+      DB_HOST                = google_sql_database_instance.db_instance.private_ip_address
     }
   }
 

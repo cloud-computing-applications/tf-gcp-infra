@@ -466,6 +466,11 @@ variable "DOMAIN_NAME" {
   sensitive = true
 }
 
+variable "VERIFICATION_END_POINT" {
+  type      = string
+  sensitive = true
+}
+
 variable "EXPIRY_BUFFER" {
   type      = number
   sensitive = true
